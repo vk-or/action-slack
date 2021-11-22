@@ -66,8 +66,12 @@ async function run(): Promise<void> {
           'You can specify success or failure or cancelled or custom',
         );
     }
-  } catch (error) {
-    core.setFailed(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      console.log(error);
+    }
   }
 }
 
